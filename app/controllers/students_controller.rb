@@ -10,7 +10,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.create(params[:student])#no strong_params required for this lab?
+    @student = Student.create(student_params)#no strong_params required for this lab?
     redirect_to student_path(@student)
   end
 
@@ -21,11 +21,14 @@ class StudentsController < ApplicationController
 
   def update
     @student = Student.find(params[:id])# are strong
-    @student.update(params[:student])
+    @student.update(student_params)
     #redirection not required in the absence of validation?
     redirect_to student_path(@student)
   end
 
-#no private actions required for this lab(?)
+private
+def student_params
+params.require(:student).permit(:first_name, :last_name)
+end
 
 end
